@@ -1,4 +1,4 @@
-# Auto-Decrypting a ZFS volume with TPM 2.0 module
+# Auto-Decrypting a ZFS Volume with TPM 2.0 Module
 I've wanted to auto-decrypt my ZFS volumes so that when my server boots, the 
 volume is automatically decrypted for immediate use. This means I won't need to 
 SSH into the box and enter the key manually. The desire to encrypt the volume, 
@@ -52,7 +52,7 @@ Give it a password and email address. It isn't imperative that you remember
 these values past this guide as when we are done, you should discard this VM.
 
 ### Step 0.7
-Complete the remainder of the setup process as you normaly would.
+Complete the remainder of the setup process as you normally would.
 
 </details>
 
@@ -94,7 +94,7 @@ existing key.
 <details>
 <summary>Option A: Generate new key</summary>
 
-Lets generate a  64-byte key made of letters and number and store is on are 
+Lets generate a  64-byte key made of letters and number and store it on our 
 ramdisk in a file named `root.key`
 ```bash 
 cat /dev/urandom | tr -dc 'a-zA-Z0-9' | head -c 64 > /ramdisk/root.key
@@ -124,8 +124,7 @@ TPM_VALUE=$(tpm2_nvread  0x01800016  2> /dev/null)
 KEY_VALUE=$(cat /ramdisk/root.key)
 [[ $TPM_VALUE  ==  $KEY_VALUE ]] && echo -e "\n${GREEN}Safe to continue${NOCOLOR}\n"  ||  echo -e "\n${RED}DO NOT PROCEED!${NOCOLOR}\n"
 ```
-If you receive a "Safe to continue" message you may proceed to the next step, else 
-troubleshoot the issue until you have resolved it.
+If you receive a "Safe to continue" message in green, you may proceed to the next step. If you receive a message in red stating "DO NOT PROCEED!", troubleshoot the issue until you have resolved it.
 
 ## Step 8
 Store the root.key value in a trusted location like your Bitwarden Vault. 
@@ -138,7 +137,7 @@ umount /ramdisk
 rm -rf /ramdisk
 ```
 ## Step 10
-Now, if you don't already have a encrypted volume we can do so
+Now, if you don't already have a encrypted volume, we should create a new volume.
 <details>
 <summary>Optional: Create a new volume</summary>
   
@@ -192,7 +191,7 @@ zfs list -rH -o name rpool/encrypted | xargs -L 1 zfs mount
 ```
 ## Step 14
 Now lets automate this. We will schedule tasks with the system via `crontab` such that 
-when the system boots, it will automagicly decrypt our volume. If this is your first time 
+when the system boots, it will automatically decrypt our volume. If this is your first time 
 running `crontab` it will prompt you to select an editor. If you aren't familar with using
 `vim` use `nano` like it suggests.
 ```bash
@@ -214,7 +213,7 @@ tail /rpool/encrypted/child2/common_sense.txt
 Profit
 
 
-## Usefull Commands
+## Useful Commands
 With no arguments, the `zpool list` command displays the following information for all pools on the system:
 ```bash
 root@pve:~# zpool list
@@ -222,7 +221,7 @@ NAME    SIZE  ALLOC   FREE  CKPOINT  EXPANDSZ   FRAG    CAP  DEDUP    HEALTH  AL
 rpool    31G  1.85G  29.1G        -         -     0%     5%  1.00x    ONLINE  -
 ```
 
-## Usefull Resources
+## Useful Resources
 The following pages I found usefull when learning what I did in order to put together this guide
 - [A quick-start guide to OpenZFS native encryption](https://web.archive.org/web/20230723203617/https://arstechnica.com/gadgets/2021/06/a-quick-start-guide-to-openzfs-native-encryption/)
 - [Ubuntu 20.04 and TPM2 encrypted system disk](https://web.archive.org/web/20230419155357/https://run.tournament.org.il/ubuntu-20-04-and-tpm2-encrypted-system-disk/)
