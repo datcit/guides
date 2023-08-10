@@ -78,7 +78,7 @@ tpm2_nvdefine -s 64 0x01800016
 -   `-s 64`: The `-s` option specifies the size of the data area to allocate in bytes.
 In this command, 64 bytes are being allocated.
 -   `0x01800016`: This is the NV index to define. The index is presented in hexadecimal format.
-It falls within the range of 0x01800016 to 0x01BFFFFF which is [reserved for the system owner to use](https://web.archive.org/web/20221027162903/https://trustedcomputinggroup.org/wp-content/uploads/RegistryOfReservedTPM2HandlesAndLocalities_v1p1_pub.pdf).
+It falls within the range of 0x01800000 to 0x01BFFFFF which is [reserved for the system owner to use](https://web.archive.org/web/20221027162903/https://trustedcomputinggroup.org/wp-content/uploads/RegistryOfReservedTPM2HandlesAndLocalities_v1p1_pub.pdf) for "OS or application specific usages."
 
 ## Step 4
 Now lets create a temporary [RAM Disk](https://en.wikipedia.org/wiki/RAM_drive) as we don't 
