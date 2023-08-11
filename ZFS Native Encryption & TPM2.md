@@ -9,8 +9,8 @@ Here's how I did it.
 
 ## Assumptions
 I've accomplished this on both v8.0.4 and v7.4-16 of Proxmox Virtual Environment. 
-While these instructions *"***should***"* work for Ubuntu 22.04, I have not 
-tested them on any other distro. In this guide, I assume that you already have a ZFS
+While these instructions *"***should***"* theoretically work for Ubuntu 22.04, I have not 
+tested them on any other distro than Proxmox. In this guide, I assume that you already have a ZFS
 pool named `rpool`. I will not go over how to create a ZFS pool in this guide. 
 If your pool is named something other than `rpool` just replace `rpool` with the 
 name of your pool when following this guide.
