@@ -2,8 +2,8 @@
 I've wanted to auto-decrypt my ZFS volumes so that when my server boots, the 
 volume is automatically decrypted for immediate use. This means I won't need to 
 SSH into the box and enter the key manually. The desire to encrypt the volume, 
-and the data inside it, wasto ensure that if I ever had to RMA, sell, or 
-otherwise dispose of a drive, my family's private data would remain secure. 
+and the data inside it, is to ensure that if I ever have to RMA, sell, or 
+otherwise dispose of a drive, my family's private data will remain secure. 
 After many failed attempts to achieve this, I've finally succeeded. 
 Here's how I did it.
 
