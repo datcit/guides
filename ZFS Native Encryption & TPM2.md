@@ -157,7 +157,7 @@ zfs create rpool/encrypted/child3
 </details>
 
 ## Step 11
-If you don't already have data in your volume, use wget to download a text file of book in the Public Doamin.
+If you don't already have data in your volume, use wget to download a text file of book in the [Public Doamin](https://en.wikipedia.org/wiki/Public_domain).
 ```bash
 wget -qO /rpool/encrypted/child2/common_sense.txt http://textfiles.com/etext/NONFICTION/common_sense
 ```
