@@ -69,7 +69,7 @@ Confirm your details than click the "install" button
 
 ## Step 0.9
 After a few minutes and the VM automaticly reboots itself, you should reach a 
-terminal login prompt. Take note of the IP URL. In my case it is https://10.64.49:8006/
+terminal login prompt. Take note of the IP URL. In my case it is https://10.64.254.49:8006/
 ![genral](./step0/pve_vm_install-9.png)
 
 ## Step 0.10
