@@ -26,34 +26,57 @@ with the process.
 Create a VM running  Proxmox VE to familiarize yourself with this guide before 
 putting it to use in production. Consider the following settings:
   - General > Start at boot: disabled (unchecked)
+![genral](./step0/pve-create_vm-general.png)
+![genral](./step0/pve-create_vm-os.png)
   - System > Add TPM: enabled (checked)
   - System > TPM Storage: Your Choice
   - System > TPM Version: 2.0
+![genral](./step0/pve-create_vm-system.png)
+![genral](./step0/pve-create_vm-disks.png)
   - CPU > Sockets: 1
   - CPU > Cores: 1
   - CPU > Type: Host
+![genral](./step0/pve-create_vm-cpu.png)
   - Memory > Memory (MiB): 2048
+![genral](./step0/pve-create_vm-memory.png)
+![genral](./step0/pve-create_vm-network.png)
+![genral](./step0/pve-create_vm-confirm.png)
 
 ### Step 0.2
 In the console select `Install Proxmox VE (Graphical)`
-
+![genral](./step0/pve_vm_install-1.png)
 ### Step 0.3
 Agree to the user agreement if you do, else we can't proceed.
-
+![genral](./step0/pve_vm_install-2.png)
 ### Step 0.4
 At the target Harddisk click the `Options` button and select `zfs (RAID0)` 
 from the filesystem dropdown and click `OK`
-
+![genral](./step0/pve_vm_install-3.png)
+![genral](./step0/pve_vm_install-4.png)
 ### Step 0.5
 Make your appropriate selections for Location and Time zone selection.
-
+![genral](./step0/pve_vm_install-5.png)
 ### Step 0.6
 Give it a password and email address. It isn't imperative that you remember 
 these values past this guide as when we are done, you should discard this VM.
-
+![genral](./step0/pve_vm_install-6.png)
 ### Step 0.7
 Complete the remainder of the setup process as you normally would.
+![genral](./step0/pve_vm_install-7.png)
+## Step 0.8
+Confirm your details than click the "install" button
+![genral](./step0/pve_vm_install-8.png)
 
+## Step 0.9
+After a few minutes and the VM automaticly reboots itself, you should reach a 
+terminal login prompt. Take note of the IP URL. In my case it is https://10.64.49:8006/
+![genral](./step0/pve_vm_install-9.png)
+
+## Step 0.10
+Close this window and navigate to your URL IP. Follow the remaining steps below in your 
+VM without fear of loosing data or breaking something. After you have completed this guide 
+in the VM you can delete the VM and proceed with going through the guide starting at Step 1
+with your production server if you so choose.
 </details>
 
 ## Step 1
