@@ -8,7 +8,7 @@ After many failed attempts to achieve this, I've finally succeeded.
 Here's how I did it.
 
 ## Assumptions
-I've accomplished this on both v8.0.4 and v7.4-16 of Proxmox Virtual Environment. 
+I've accomplished this on both `v8.0.4` and `v7.4-16` of Proxmox Virtual Environment (PVE) also known as Proxmox VE. 
 While these instructions *"***should***"* theoretically work for Ubuntu 22.04, I have not 
 tested them on any other distro than Proxmox. In this guide, I assume that you already have a ZFS
 pool named `rpool`. I will not go over how to create a ZFS pool in this guide. 
@@ -23,7 +23,7 @@ as to remove the concern of breaking something as well as familiarizing yourself
 with the process.
   
 ### Step 0.1
-Create a VM running  Proxmox VE to familiarize yourself with this guide before 
+Create a VM running PVE to familiarize yourself with this guide before 
 putting it to use in production. Consider the following settings:
   - General > Start at boot: disabled (unchecked)
 ![genral](./step0/pve-create_vm-general.png)
