@@ -48,7 +48,8 @@ postfix reload
 ## Step N
 Send a test email
 ```bash
-echo "This is a test message sent from postfix on my Proxmox Server" | mail -s "Test Email from Proxmox" root
+#echo "Test email from Proxmox: $(hostname)" | mail -s "Test Email from Proxmox" root
+echo "Test email from Proxmox: $(hostname)" | /usr/bin/proxmox-mail-forward
 ```
 
 ## Step N
