@@ -66,7 +66,7 @@ postmap hash:/etc/postfix/smtp_header_checks
 
 ## Step N
 Add the following line to the end of the `/etc/postfix/main.cf` file
-``conf
+```conf
 smtp_header_checks = pcre:/etc/postfix/smtp_header_checks
 ```
 
