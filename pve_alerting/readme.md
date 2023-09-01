@@ -16,11 +16,11 @@ At this point, you should have the "Proxmox Console" window open.
 To proceed, install the `tpm2-tools` package. Run the following command in the 
 "Proxmox Console":
 ```bash
-apt install -y libsasl2-modules mailutils postfix-pcre
+apt install -y libsasl2-modules mailutils
 ```
 ## Step 3
 Generate a new [app password](https://www.fastmail.help/hc/en-us/articles/360058752854-App-passwords). 
-In the `Name` dropdown select `Custom` and in the `Access` dropdown select `SMTP`
+In the **Name** dropdown select `Custom` and in the **`Access`** dropdown select `SMTP`
 
 ## Step 4
 Configure postfix
@@ -53,22 +53,42 @@ echo "Test email from Proxmox: $(hostname)" | /usr/bin/proxmox-mail-forward
 ```
 
 ## Step N
+<details>
+<summary>Option A</summary>
+Change the finger information for the `root` user.
+  
+```bash
+chfn --full-name "Display Name" root
+```
+</details>
+
+<details>
+<summary>Option B</summary>
+Use Postfix PCRE to change the root user display name on emails sent from postfix.
+  
+### Option B Step N
+```bash
+apt install -y postfix-pcre
+```
+
+### Option B Step N
 /etc/postfix/smtp_header_check
 ```conf
 /^From: (.*) (.*)$/ REPLACE From: EmailDisplayName $2
 ```
 
-## Step N
+### Option B Step N
 Hash the file
 ```bash
 postmap hash:/etc/postfix/smtp_header_checks
 ```
 
-## Step N
+### Option B Step N
 Add the following line to the end of the `/etc/postfix/main.cf` file
 ```conf
 smtp_header_checks = pcre:/etc/postfix/smtp_header_checks
 ```
+</details>
 
 ## Step N
 Verify all disks have SMART enabled.
