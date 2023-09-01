@@ -59,6 +59,18 @@ echo "Test email from Proxmox: $(hostname)" | /usr/bin/proxmox-mail-forward
 ```
 
 ## Step N
+Hash the file
+```bash
+postmap hash:/etc/postfix/smtp_header_checks
+```
+
+## Step N
+Add the following line to the end of the `/etc/postfix/main.cf` file
+``conf
+smtp_header_checks = pcre:/etc/postfix/smtp_header_checks
+```
+
+## Step N
 Verify all disks have SMART enabled.
 ```bash
 smartctl --scan | awk '{print $1}' | xargs -I {} sh -c "echo {}; smartctl -i {} | grep 'SMART support is:'"
