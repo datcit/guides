@@ -64,6 +64,17 @@ Verify all disks have SMART enabled.
 smartctl --scan | awk '{print $1}' | xargs -I {} sh -c "echo {}; smartctl -i {} | grep 'SMART support is:'"
 ```
 
+## Helpful commands
+```bash
+tail -f /var/log/syslog
+```
+```bash
+tail -f /var/log/mail.warn
+```
+```bash
+tail -f /var/log/mail.info
+```
+
 ## Useful Resources
 The following pages I found usefull when learning what I did in order to put together this guide
 - [Set up alerts in Proxmox before it's too late!](https://web.archive.org/web/20230901194249/https://technotim.live/posts/proxmox-alerts/)
