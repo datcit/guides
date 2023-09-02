@@ -23,16 +23,17 @@ Generate a new [app password](https://www.fastmail.help/hc/en-us/articles/360058
 In the **Name** dropdown select `Custom` and in the **`Access`** dropdown select `SMTP`
 
 ## Step 4
+Create `sasl_passwd` and update permissions to the file so that owner (root) has read and write permissions while all others have no access.
+```bash
+touch /etc/postfix/sasl_passwd && chmod 600 /etc/postfix/sasl_passwd
+```
+
+## Step 5
 Configure postfix
 ```bash
 echo "[smtp.fastmail.com]:587 your-email@example.com:YourAppPassword" > /etc/postfix/sasl_passwd
 ```
 
-## Step 5
-Update permissions to the file so that owner (root) has read and write permissions while all others have no access.
-```bash
-chmod 600 /etc/postfix/sasl_passwd
-```
 ## Step 6
 Create a hash file. If you make changes to `sasl_passwd` in the future you will need to run this again.
 ```bash
