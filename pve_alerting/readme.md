@@ -34,7 +34,7 @@ Update permissions to the file so that owner (root) has read and write permissio
 chmod 600 /etc/postfix/sasl_passwd
 ```
 ## Step 6
-Hash the file
+Create a hash file. If you make changes to `sasl_passwd` in the future you will need to run this again.
 ```bash
 postmap hash:/etc/postfix/sasl_passwd
 ```
@@ -78,7 +78,7 @@ apt install -y postfix-pcre
 ```
 
 ### Option B Step N
-Hash the file
+Create a hash file. If you make changes to `smtp_header_checks` in the future you will need to run this again.
 ```bash
 postmap hash:/etc/postfix/smtp_header_checks
 ```
