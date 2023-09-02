@@ -13,7 +13,7 @@ window and then click the "Upgrade" button.
 
 ## Step 2
 At this point, you should have the "Proxmox Console" window open.
-To proceed, install the `tpm2-tools` package. Run the following command in the 
+To proceed, install the following packages. Run the following command in the 
 "Proxmox Console":
 ```bash
 apt install -y libsasl2-modules mailutils
