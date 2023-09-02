@@ -75,7 +75,7 @@ apt install -y postfix-pcre
 ### Option B Step N
 /etc/postfix/smtp_header_check
 ```conf
-/^From: (.*) (.*)$/ REPLACE From: "Display Name" <$2>
+/^From: .*<(.*)>.*$/ REPLACE From: "Display Name" <$1>
 ```
 
 ### Option B Step N
