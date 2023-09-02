@@ -56,11 +56,13 @@ echo "Test email from Proxmox: $(hostname)" | /usr/bin/proxmox-mail-forward
 ## Step N
 <details>
 <summary>Option A</summary>
-Change the finger information for the `root` user.
+Change the finger information for the `root` user. Run the command below being shore to
+change `DATC.IT Guide` to a name sutiable to your needs.
   
 ```bash
-chfn --full-name "Display Name" root
+chfn --full-name "DATC.IT Guide" root
 ```
+
 </details>
 
 <details>
@@ -75,7 +77,7 @@ apt install -y postfix-pcre
 ### Option B Step N
 /etc/postfix/smtp_header_check
 ```conf
-/^From: .*<(.*)>.*$/ REPLACE From: "Display Name" <$1>
+/^From: .*<(.*)>.*$/ REPLACE From: "DATC.IT Guide" <$1>
 ```
 
 ### Option B Step N
@@ -98,6 +100,11 @@ smartctl --scan | awk '{print $1}' | xargs -I {} sh -c "echo {}; smartctl -i {} 
 ```
 
 ## Helpful commands
+Restart the postfix service:
+```bash
+systemctl restart postfix.service
+```
+Logs:
 ```bash
 tail -f /var/log/syslog
 ```
