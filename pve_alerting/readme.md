@@ -6,54 +6,65 @@ The example I use below uses the domain `mydomain.example.com`. This should be r
 own and have control of.
 
 ## Step 1
+Verify root user has email set.
+
+## Step 2
 Before installing new packages, always ensure that your package index files and 
 the system itself are up-to-date. To do this, click the "Refresh" button in the 
 Proxmox VE web-ui. Once you see **`TASK OK`**, close the "Task Viewer" modal 
 window and then click the "Upgrade" button.
 
-## Step 2
+## Step 3
 At this point, you should have the "Proxmox Console" window open.
 To proceed, install the following packages. Run the following command in the 
 "Proxmox Console":
 ```bash
 apt install -y libsasl2-modules mailutils
 ```
-## Step 3
+## Step 4
 Generate a new [app password](https://www.fastmail.help/hc/en-us/articles/360058752854-App-passwords). 
 In the **Name** dropdown select `Custom` and in the **`Access`** dropdown select `SMTP`
 
-## Step 4
+## Step 5
 Create `sasl_passwd` and update permissions to the file so that owner (root) has read and write permissions while all others have no access.
 ```bash
 touch /etc/postfix/sasl_passwd && chmod 600 /etc/postfix/sasl_passwd
 ```
 
-## Step 5
-Configure postfix
+## Step 6
+Using nano or your faviorite text editor, configure the Postfix SASL authentication file.
 ```bash
-echo "[smtp.fastmail.com]:587 your-email@example.com:YourAppPassword" > /etc/postfix/sasl_passwd
+nano /etc/postfix/sasl_passwd
+```
+Add the following line replacing `your-email@example.com` and `YourAppPassword` with your values. 
+```conf
+[smtp.fastmail.com]:587 your-email@example.com:YourAppPassword" > /etc/postfix/sasl_passwd
 ```
 
-## Step 6
+## Step 7
 Create a hash file. If you make changes to `sasl_passwd` in the future you will need to run this again.
 ```bash
 postmap hash:/etc/postfix/sasl_passwd
 ```
 
-## Step N
+## Step 8
 Reload Postfix
 ```bash
 postfix reload
 ```
 
-## Step N
-Send test emails
+## Step 9
+Send test email
 ```bash
-echo "Test email from Proxmox: $(hostname)" | mail -s "Test Email from Proxmox" root
+#echo "Test email from Proxmox: $(hostname)" | mail -s "Test Email from Proxmox" root #Alternate method
 echo "Test email from Proxmox: $(hostname)" | /usr/bin/proxmox-mail-forward
 ```
+Shortly (~30 seconds) after running the above command you should recieve an email from something like
+"root <configured.email@example.com". In this case the "display name" is `root`. We want to change this
+display name to something more 1) Identifable (who/what sent the email) and 2) more "pro".
 
-## Step N
+## Step 10
+Change the email display name.
 <details>
 <summary>Option A</summary>
 Change the finger information for the `root` user. 
@@ -65,31 +76,30 @@ change `DATC.IT Guide` to a name sutiable to your needs.
 ```bash
 chfn --full-name "DATC.IT Guide" root
 ```
-
 </details>
 
 <details>
 <summary>Option B</summary>
 Use Postfix PCRE to change the root user display name on emails sent from postfix.
   
-### Option B Step N
+### Option B Step 1
 ```bash
 apt install -y postfix-pcre
 ```
 
-### Option B Step N
+### Option B Step 2
 /etc/postfix/smtp_header_check
 ```conf
 /^From: .*<(.*)>.*$/ REPLACE From: "DATC.IT Guide" <$1>
 ```
 
-### Option B Step N
+### Option B Step 3
 Create a hash file. If you make changes to `smtp_header_checks` in the future you will need to run this again.
 ```bash
 postmap hash:/etc/postfix/smtp_header_checks
 ```
 
-### Option B Step N
+### Option B Step 4
 Add the following line to the end of the `/etc/postfix/main.cf` file
 ```conf
 smtp_header_checks = pcre:/etc/postfix/smtp_header_checks
