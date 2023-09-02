@@ -56,7 +56,10 @@ echo "Test email from Proxmox: $(hostname)" | /usr/bin/proxmox-mail-forward
 ## Step N
 <details>
 <summary>Option A</summary>
-Change the finger information for the `root` user. Run the command below being shore to
+Change the finger information for the `root` user. 
+
+### Option A Step 1
+Run the command below being shore to
 change `DATC.IT Guide` to a name sutiable to your needs.
   
 ```bash
