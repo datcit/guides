@@ -102,6 +102,15 @@ Verify all disks have SMART enabled.
 smartctl --scan | awk '{print $1}' | xargs -I {} sh -c "echo {}; smartctl -i {} | grep 'SMART support is:'"
 ```
 
+## Step N
+Test SMART notifications 
+
+## Step N
+Test ZED notifications
+
+## Step N
+Mailrise(Apprise)
+
 ## Helpful commands
 Restart the postfix service:
 ```bash
