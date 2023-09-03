@@ -36,7 +36,7 @@ Using nano or your faviorite text editor, configure the Postfix SASL authenticat
 ```bash
 nano /etc/postfix/sasl_passwd
 ```
-Add the following line replacing `your-email@example.com` and `YourAppPassword` with your values. 
+Add the following line to the file, replacing `your-email@example.com` and `YourAppPassword` with your values. 
 ```conf
 [smtp.fastmail.com]:587 your-email@example.com:YourAppPassword" > /etc/postfix/sasl_passwd
 ```
