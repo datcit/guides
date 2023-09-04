@@ -52,6 +52,7 @@ Add the following line to the file, replacing `SendingAddress@example.com` and `
 ```conf
 [smtp.fastmail.com]:587 SendingAddress@example.com:YourAppPassword" > /etc/postfix/sasl_passwd
 ```
+{: file="/etc/postfix/sasl_passwd" }
 
 ## Step 7 - Hash `sasl_passwd` 
 Create a hash file. If you make changes to `sasl_passwd` in the future you will need to run this again.
@@ -100,10 +101,18 @@ apt install -y postfix-pcre
 ```
 
 ### Option B Step 2
-/etc/postfix/smtp_header_check
+Use nano to add `/^From: .*<(.*)>.*$/ REPLACE From: "DATC.IT Guide" <$1>` to
+`/etc/postfix/smtp_header_check` being sure to replace `DATC.IT Guide` with your 
+desired email display name.
+```shell
+nano /etc/postfix/smtp_header_check
+```
+{: .nolineno }
+
 ```conf
 /^From: .*<(.*)>.*$/ REPLACE From: "DATC.IT Guide" <$1>
 ```
+{: file="/etc/postfix/smtp_header_check" }
 
 ### Option B Step 3
 Create a hash file. If you make changes to `smtp_header_checks` in the future you will need to run this again.
@@ -116,6 +125,8 @@ Add the following line to the end of the `/etc/postfix/main.cf` file
 ```conf
 smtp_header_checks = pcre:/etc/postfix/smtp_header_checks
 ```
+{: file="/etc/postfix/main.cf" }
+
 </details>
 
 ## Step N
