@@ -125,11 +125,31 @@ smartctl --scan | awk '{print $1}' | xargs -I {} sh -c "echo {}; smartctl -i {} 
 ```
 This command will list all your disks and show whether SMART is supported and enabled.
 
-## Step N
+## Step 12
 Test SMART notifications 
 
-## Step N
-Test ZED notifications
+## Step 13 - Test ZED notifications
+To validate ZED notifications, follow these steps:
+1. Navigate to the /tmp directory and create a sparse file:
+```bash
+cd /tmp
+dd if=/dev/zero of=sparse_file bs=1 count=0 seek=512M
+```
+2. Create a test ZFS pool using the sparse file:
+```bash
+zpool create test /tmp/sparse_file
+```
+3. Initiate a scrub operation on the test pool:
+```bash
+zpool scrub test
+```
+The scrubbing should complete almost instantly since the test pool doesn't contain any data. If you receive an email notification, it confirms that ZED is functioning correctly.
+
+4. After testing, clean up by exporting the test pool and removing the sparse file:
+```bash
+zpool export test
+rm sparse_file
+```
 
 ## Step N
 Mailrise(Apprise)
