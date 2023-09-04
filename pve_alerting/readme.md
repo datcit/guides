@@ -118,11 +118,12 @@ smtp_header_checks = pcre:/etc/postfix/smtp_header_checks
 
 </details>
 
-## Step N
-Verify all disks have SMART enabled.
+## Step 11 - Verify SMART Activation on All Disks
+To ensure that all your disks have SMART (Self-Monitoring, Analysis, and Reporting Technology) enabled, use the following command:
 ```bash
 smartctl --scan | awk '{print $1}' | xargs -I {} sh -c "echo {}; smartctl -i {} | grep 'SMART support is:'"
 ```
+This command will list all your disks and show whether SMART is supported and enabled.
 
 ## Step N
 Test SMART notifications 
