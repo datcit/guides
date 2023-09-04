@@ -3,20 +3,20 @@
 ## Assumptions
 I have successfully completed this procedure on both Proxmox Virtual Environment (PVE), versions `v8.0.4` and `v7.4-16`, also referred to as Proxmox VE. In the example provided below, I utilize the domain `mydomain.example.com`. It's essential to substitute this with the domain that you possess and manage. Throughout this guide, I employ two email addresses: `SendingAddress@example.com` and `ReceivingAddress@example.com`. You can choose to use the same address for both, but regardless, you must replace these placeholders with email addresses that you own and control.
 
-## Step 1 - Configure the Recieving Address
+## Step 1 - Configuring the Recieving Address
 If you haven't installed Proxmox VE yet and are following this guide for a fresh installation, make sure that when you reach the `Administration Password & Email Address` screen, you use a valid email address that you own or have control over. This email address will be used to receive alerts.
 
 If you are working with an existing installation, go to the WebUI and click on `Datacenter` in the left-hand tree-view. In this view, click on `Options`. Look for the `Email from address` field and double-click to edit it. Replace the current email address with a valid one that you own or have control over.
 
-## Step 2 - Update System & Packakges
+## Step 2 - Updating System & Packakges
 Prior to installing new packages, it's crucial to confirm the currency of your package index files and the system. To achieve this, click on the "Refresh" button within the Proxmox VE web UI. Once you observe the status **`TASK OK`**, proceed to close the "Task Viewer" modal window and subsequently select the "Upgrade" button.
 
-## Step 3 - Install Required Packages
+## Step 3 - Installing Required Packages
 At this point, you should have the "Proxmox Console" window open. To proceed, install the following packages. Run the following command in the "Proxmox Console":
 ```bash
 apt install -y libsasl2-modules mailutils
 ```
-## Step 4 - Generate Fastmail App Password (Sending Address)
+## Step 4 - Generating Fastmail App Password (Sending Address)
 Generate a new [app password](https://www.fastmail.help/hc/en-us/articles/360058752854-App-passwords). 
 In the **Name** dropdown select `Custom` and in the **`Access`** dropdown select `SMTP`
 
@@ -65,7 +65,7 @@ Note: An alternate method to send a test email is:
 #echo "Test email from Proxmox: $(hostname)" | mail -s "Test Email from Proxmox" root
 ```
 
-## Step 10 - Modify the Email Display Name.
+## Step 10 - Modifying the Email Display Name.
 Shortyly after running the command in the previous step, you should receive an email coming from something like `root <SendingAddress@example.com`. In this case the "display name" is `root`. We want to change this display name to something more Identifable IE who or what sent the email. To complete this, we have two options [complete this]
 <details>
 <summary>Option A: Modify Root User's Finger Information</summary>
@@ -118,7 +118,7 @@ smtp_header_checks = pcre:/etc/postfix/smtp_header_checks
 
 </details>
 
-## Step 11 - Verify SMART Activation on All Disks
+## Step 11 - Verifying SMART Activation on All Disks
 To ensure that all your disks have SMART (Self-Monitoring, Analysis, and Reporting Technology) enabled, use the following command:
 ```bash
 smartctl --scan | awk '{print $1}' | xargs -I {} sh -c "echo {}; smartctl -i {} | grep 'SMART support is:'"
@@ -128,8 +128,8 @@ This command will list all your disks and show whether SMART is supported and en
 ## Step 12
 Test SMART notifications 
 
-## Step 13 - Test ZED notifications
-To validate ZED notifications, follow these steps:
+## Step 13 - Testing ZED notifications
+To validate ZED (ZFS Event Daemon) notifications, follow these steps:
 1. Navigate to the /tmp directory and create a sparse file:
 ```bash
 cd /tmp
@@ -151,8 +151,11 @@ zpool export test
 rm sparse_file
 ```
 
-## Step N
+## Step N (To Consider)
 Mailrise(Apprise)
+
+## Step N (To Consider)
+Opening github issue on notification
 
 ## Helpful commands
 Restart the postfix service:
