@@ -1,34 +1,18 @@
 # The Definitive Guide to Email Alerts with Proxmox VE 8.0
 
 ## Assumptions
-I've accomplished this on both `v8.0.4` and `v7.4-16` of Proxmox Virtual
-Environment (PVE) also known as Proxmox VE. The example I use below uses the
-domain `mydomain.example.com`. This should be replaced with the domain that you
-have own and have control of. In this guide we use two email address
-`SendingAddress@example.com` and `RecievingAddress@example.com`. If you prefer
-it, they can be the same address, but either way, you will need to replace them
-with addresses you are the owner of.
+I have successfully completed this procedure on both Proxmox Virtual Environment (PVE), versions `v8.0.4` and `v7.4-16`, also referred to as Proxmox VE. In the example provided below, I utilize the domain `mydomain.example.com`. It's essential to substitute this with the domain that you possess and manage. Throughout this guide, I employ two email addresses: `SendingAddress@example.com` and `ReceivingAddress@example.com`. You can choose to use the same address for both, but regardless, you must replace these placeholders with email addresses that you own and control.
 
 ## Step 1 - Configure the Recieving Address
-If  you have not already installed Proxmox VE and are following this guide as
-part of a fresh install, when you get to the
-`Administration Password & Email Address` screen, be sure to use a vaild email
-address that you own / have control of. If this an exsisting instilation, in the
-WebUI left-click `Datacenter` in the lefthand tree-view, and in this view, 
-left-click `Options`. From here you should see a field labeled
-`Email from address`. Double click this field and replace it with a vaild email
-address that you own / have control of.
+If you haven't installed Proxmox VE yet and are following this guide for a fresh installation, make sure that when you reach the `Administration Password & Email Address` screen, you use a valid email address that you own or have control over. This email address will be used to receive alerts.
+
+If you are working with an existing installation, go to the WebUI and click on `Datacenter` in the left-hand tree-view. In this view, click on `Options`. Look for the `Email from address` field and double-click to edit it. Replace the current email address with a valid one that you own or have control over.
 
 ## Step 2 - Update System & Packakges
-Before installing new packages, always ensure that your package index files and 
-the system itself are up-to-date. To do this, click the "Refresh" button in the 
-Proxmox VE web-ui. Once you see **`TASK OK`**, close the "Task Viewer" modal 
-window and then click the "Upgrade" button.
+Prior to installing new packages, it's crucial to confirm the currency of your package index files and the system. To achieve this, click on the "Refresh" button within the Proxmox VE web UI. Once you observe the status **`TASK OK`**, proceed to close the "Task Viewer" modal window and subsequently select the "Upgrade" button.
 
 ## Step 3 - Install Required Packages
-At this point, you should have the "Proxmox Console" window open.
-To proceed, install the following packages. Run the following command in the 
-"Proxmox Console":
+At this point, you should have the "Proxmox Console" window open. To proceed, install the following packages. Run the following command in the "Proxmox Console":
 ```bash
 apt install -y libsasl2-modules mailutils
 ```
@@ -36,50 +20,55 @@ apt install -y libsasl2-modules mailutils
 Generate a new [app password](https://www.fastmail.help/hc/en-us/articles/360058752854-App-passwords). 
 In the **Name** dropdown select `Custom` and in the **`Access`** dropdown select `SMTP`
 
-## Step 5 - Create `sasl_passwd`
+## Step 5 - Creating `sasl_passwd`
 Create `sasl_passwd` and update permissions to the file so that owner (root) has
 read and write permissions while all others have no access.
 ```bash
-touch /etc/postfix/sasl_passwd && chmod 600 /etc/postfix/sasl_passwd
+touch /etc/postfix/sasl_passwd
+chmod 600 /etc/postfix/sasl_passwd
 ```
 
-## Step 6 - Configure `sasl_passwd`
-Using nano or your faviorite text editor, configure the Postfix SASL authentication file.
+## Step 6 - Configuring `sasl_passwd`
+Utilize your preferred text editor, such as nano, to configure the Postfix SASL authentication file:
 ```bash
 nano /etc/postfix/sasl_passwd
 ```
-Add the following line to the file, replacing `SendingAddress@example.com` and `YourAppPassword` with your values. 
+Add the following line to the file, replacing `SendingAddress@example.com` and `YourAppPassword` with your specific values: 
 ```conf
 [smtp.fastmail.com]:587 SendingAddress@example.com:YourAppPassword" > /etc/postfix/sasl_passwd
 ```
 {: file="/etc/postfix/sasl_passwd" }
 
-## Step 7 - Hash `sasl_passwd` 
-Create a hash file. If you make changes to `sasl_passwd` in the future you will need to run this again.
+## Step 7 - Hashing `sasl_passwd` 
+Generate a hash file for the sasl_passwd using the following command. 
+> Note that if you make future changes to `sasl_passwd`, you will need to execute this step again
+{: .prompt-info }
 ```bash
 postmap hash:/etc/postfix/sasl_passwd
 ```
 
-## Step 8 - Reload Postfix
-Next we want to reload postfix for it to pickup our changes.
+## Step 8 - Reloading Postfix
+Continuing on, we need to reload Postfix to ensure that it picks up the changes we've made.
+> Note that if you make future changes to `sasl_passwd`, you will need to execute this step again
+{: .prompt-info }
 ```bash
 postfix reload
 ```
 
-## Step 9 - Send test email
-
+## Step 9 - Sending a Test Email
+To verify that everything is set up correctly, run the following command in your terminal:
 ```bash
-#echo "Test email from Proxmox: $(hostname)" | mail -s "Test Email from Proxmox" root #Alternate method
 echo "Test email from Proxmox: $(hostname)" | /usr/bin/proxmox-mail-forward
 ```
-Shortly (~30 seconds) after running the above command you should recieve an email from something like
-"root <configured.email@example.com". In this case the "display name" is `root`. We want to change this
-display name to something more 1) Identifable (who/what sent the email) and 2) more "pro".
+Note: An alternate method to send a test email is:
+```bash
+#echo "Test email from Proxmox: $(hostname)" | mail -s "Test Email from Proxmox" root
+```
 
-## Step 10 - Change the email display name.
-
+## Step 10 - Modify the Email Display Name.
+Shortyly after running the command in the previous step, you should receive an email coming from something like `root <SendingAddress@example.com`. In this case the "display name" is `root`. We want to change this display name to something more Identifable IE who or what sent the email. To complete this, we have two options [complete this]
 <details>
-<summary>Option A</summary>
+<summary>Option A: Modify Root User's Finger Information</summary>
 Change the finger information for the `root` user. 
 
 ### Option A Step 1
@@ -92,7 +81,7 @@ chfn --full-name "DATC.IT Guide" root
 </details>
 
 <details>
-<summary>Option B</summary>
+<summary>Option B: Use Postfix PCRE to Change the Display Name</summary>
 Use Postfix PCRE to change the root user display name on emails sent from postfix.
   
 ### Option B Step 1
