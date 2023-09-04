@@ -125,10 +125,13 @@ smartctl --scan | awk '{print $1}' | xargs -I {} sh -c "echo {}; smartctl -i {} 
 ```
 This command will list all your disks and show whether SMART is supported and enabled.
 
-## Step 12
-Test SMART notifications 
+## Step 12 - SMART Scrub Schedule
 
-## Step 13 - Testing ZED notifications
+## Step 13 - Testing SMART notifications 
+
+## Step 14 - ZFS Scrub Schedule
+
+## Step 15 - Testing ZED notifications
 To validate ZED (ZFS Event Daemon) notifications, follow these steps:
 1. Navigate to the /tmp directory and create a sparse file:
 ```bash
@@ -151,11 +154,9 @@ zpool export test
 rm sparse_file
 ```
 
-## Step N (To Consider)
-Mailrise(Apprise)
-
-## Step N (To Consider)
-Opening github issue on notification
+## Posible Future Guides
+- Mailrise(Apprise) Notifications
+- Opening github issue on notification
 
 ## Helpful commands
 Restart the postfix service:
