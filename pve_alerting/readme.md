@@ -133,10 +133,9 @@ This command will list all your disks and show whether SMART is supported and en
 
 ## Step 15 - Testing ZED notifications
 To validate ZED (ZFS Event Daemon) notifications, follow these steps:
-1. Navigate to the /tmp directory and create a sparse file:
+1. Create a sparse file in the /tmp directory:
 ```bash
-cd /tmp
-dd if=/dev/zero of=sparse_file bs=1 count=0 seek=512M
+dd if=/dev/zero of=/tmp/sparse_file bs=1 count=0 seek=512M
 ```
 2. Create a test ZFS pool using the sparse file:
 ```bash
